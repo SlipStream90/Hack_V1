@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map - MarkFin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: url('/static/back.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-section {
+            padding: 120px 20px 60px;
+            flex: 1;
+        }
+
+        .map-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 40px;
+            border: 2px solid #ffdd57;
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .coordinates-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        input {
+            padding: 12px;
+            border: 2px solid #ffdd57;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        button {
+            background: #ffdd57;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            background: #ffe584;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <section class="map-section">
+        <div class="map-container">
+            <div id="map"></div>
+            <form method="post" class="coordinates-form" action="{{ url_for('map') }}">
+                <div class="form-group">
+                    <input type="text" id="latitude" name="latitude" readonly placeholder="Latitude">
+                    <input type="text" id="longitude" name="longitude" readonly placeholder="Longitude">
+                </div>
+                <button type="submit">Submit Location</button>
+            </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </section>
+
+    {% include 'footer.html' %}
+
+    <script>
+        // Initialize the map centered on India
+        var map = L.map('map').setView([20.5937, 78.9629], 5);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var marker = null;
+
+        // Handle map clicks
+        map.on('click', function(e) {
+            // Remove existing marker if any
+            if (marker !== null) {
+                map.removeLayer(marker);
+            }
+
+            // Add new marker
+            marker = L.marker(e.latlng).addTo(map);
+
+            // Update form inputs
+            document.getElementById('latitude').value = e.latlng.lat.toFixed(6);
+            document.getElementById('longitude').value = e.latlng.lng.toFixed(6);
+        });
+    </script>
+</body>
+</html>

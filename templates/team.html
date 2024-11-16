@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - Aegis</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: url('/static/back.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+
+        .team-section {
+            padding: 120px 20px 60px;
+        }
+
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .team-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffdd57;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .team-member {
+            background: rgba(245, 245, 220, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            color: #333;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: calc(var(--order) * 0.1s);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .member-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 4px solid #ffdd57;
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover .member-image {
+            transform: scale(1.1);
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .member-name {
+            font-size: 1.5rem;
+            color: #1a2b4c;
+            margin-bottom: 10px;
+        }
+
+        .member-position {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .member-description {
+            font-size: 0.9rem;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: rgba(245, 245, 220, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 95%;
+            position: relative;
+            color: #333;
+            transform: scale(0.7);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .modal-image {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            border: 6px solid #ffdd57;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #333;
+            transition: transform 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <section class="team-section">
+        <div class="team-container">
+            <div class="team-header">
+                <h1>Meet Our Development Team</h1>
+                <p>The talented developers behind Aegis</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-member" onclick="showModal(this)" style="--order: 1">
+                    <div class="member-image">
+                        <img src="{{ url_for('static', filename='frontend1.jpg') }}" alt="Frontend Developer">
+                    </div>
+                    <h3 class="member-name">Ansh Mahajan</h3>
+                    <div class="member-position">Frontend Developer</div>
+                    <p class="member-description">Specializing in creating beautiful and responsive user interfaces. Alex brings expertise in React and modern CSS frameworks to create seamless user experiences.</p>
+                </div>
+
+                <div class="team-member" onclick="showModal(this)" style="--order: 2">
+                    <div class="member-image">
+                        <img src="{{ url_for('static', filename='frontend2.jpg') }}" alt="Frontend Developer">
+                    </div>
+                    <h3 class="member-name">Shivam Sukheja</h3>
+                    <div class="member-position">Frontend Developer</div>
+                    <p class="member-description">A creative frontend developer with a keen eye for design. David excels in animation and interactive elements, making our applications come alive.</p>
+                </div>
+
+                <div class="team-member" onclick="showModal(this)" style="--order: 3">
+                    <div class="member-image">
+                        <img src="{{ url_for('static', filename='backend.jpg') }}" alt="Backend Developer">
+                    </div>
+                    <h3 class="member-name">Aditi Dilip Kumar Gupta</h3>
+                    <div class="member-position">Backend Developer</div>
+                    <p class="member-description">An expert in server-side architecture and database design. Sarah ensures our applications are secure, scalable, and perform optimally under any conditions.</p>
+                </div>
+
+                <div class="team-member" onclick="showModal(this)" style="--order: 4">
+                    <div class="member-image">
+                        <img src="{{ url_for('static', filename='fullstack.jpg') }}" alt="Fullstack Developer">
+                    </div>
+                    <h3 class="member-name">Aditya Singh</h3>
+                    <div class="member-position">Fullstack Developer</div>
+                    <p class="member-description">A versatile developer proficient in both frontend and backend technologies. Michael bridges the gap between different layers of our application stack.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="memberModal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-image">
+                <img id="modalImage" src="" alt="Team Member">
+            </div>
+            <h2 id="modalName" class="member-name"></h2>
+            <div id="modalPosition" class="member-position"></div>
+            <p id="modalDescription" class="member-description"></p>
+        </div>
+    </div>
+
+    <script>
+        function showModal(element) {
+            const modal = document.getElementById('memberModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+
+            const modalImage = document.getElementById('modalImage');
+            const modalName = document.getElementById('modalName');
+            const modalPosition = document.getElementById('modalPosition');
+            const modalDescription = document.getElementById('modalDescription');
+
+            modalImage.src = element.querySelector('img').src;
+            modalName.textContent = element.querySelector('.member-name').textContent;
+            modalPosition.textContent = element.querySelector('.member-position').textContent;
+            modalDescription.textContent = element.querySelector('.member-description').textContent;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('memberModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+    </script>
+
+    {% include 'footer.html' %}
+</body>
+</html>

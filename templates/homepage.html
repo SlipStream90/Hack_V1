@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarkFin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Adding Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add transitions to elements */
+        .banner-content {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .banner-text h1 {
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .banner-text p {
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .banner-btn {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 1s ease-out 0.9s backwards;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background: #ffdd57;
+            color: #1A2B4C;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #1A2B4C;
+            color: #ffdd57;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: #ffdd57;
+            margin: 15px auto;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .feature.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: #ffdd57;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover i {
+            transform: scale(1.1);
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .event-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .team-member.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ffdd57;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top i {
+            color: #1A2B4C;
+        }
+
+        /* Scroll trigger styles */
+        .scroll-trigger {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .scroll-trigger i {
+            color: #ffdd57;
+            font-size: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+{% include 'header.html' %}
+
+<section id="banner">
+    <video autoplay muted loop playsinline id="banner-video">
+        <source src="{{ url_for('static', filename='videoplayback.mp4') }}" type="video/mp4">
+    </video>
+    <div class="banner-content">
+        <img src="{{ url_for('static', filename='logo-main.jpg') }}" class="logo">
+        <div class="banner-text">
+            <h1>Aegis</h1>
+            <p>Intelligent Claims, Instant Gratification.</p>
+        </div>
+    </div>
+    <div class="scroll-trigger">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</section>
+
+<section id="about">
+    <div class="container">
+        <h2 class="section-title" style="color: white;">About Us</h2>
+        <p style="color: white;">We are the Marketing, Finance, and Investment Cell at TIET. Our mission is to empower students with the knowledge and skills needed to excel in the fields of marketing, finance, and investment. We organize workshops, seminars, and interactive sessions to provide hands-on experience and real-world insights.</p>
+        <div class="about-features">
+            <div class="feature">
+                <i class="fas fa-eye"></i>
+                <h3>Our Vision</h3>
+                <p>To become the leading student-run organization fostering financial literacy and marketing excellence.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-star"></i>
+                <h3>Our Values</h3>
+                <p>Innovation, Integrity, Excellence, and Continuous Learning drive everything we do.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="events">
+    <div class="container">
+        <h2 class="section-title" style="color: white;">Upcoming Events</h2>
+        <div class="event-grid">
+            <div class="event-card">
+                <i class="fas fa-laptop"></i>
+                <h4>Workshop on Digital Marketing</h4>
+                <p>Date: 25th March</p>
+            </div>
+            <div class="event-card">
+                <i class="fas fa-chart-line"></i>
+                <h4>Finance Bootcamp</h4>
+                <p>Date: 10th April</p>
+            </div>
+            <div class="event-card">
+                <i class="fas fa-coins"></i>
+                <h4>Investment Strategies Seminar</h4>
+                <p>Date: 15th May</p>
+            </div>
+        </div>
+        <div class="past-events">
+            <h3 class="section-title" style="color: white;">Past Events Highlights</h3>
+            <div class="event-grid">
+                <div class="event-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h4>Stock Market Masterclass</h4>
+                    <p>An intensive session on understanding market dynamics and trading strategies.</p>
+                </div>
+                <div class="event-card">
+                    <i class="fas fa-bullhorn"></i>
+                    <h4>Marketing Summit 2023</h4>
+                    <p>Industry experts shared insights on emerging marketing trends and strategies.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="team">
+    <div class="container">
+        <h2 class="section-title" style="color: white;">Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='advisor.jpg') }}" alt="Faculty Advisor">
+                <h3>Faculty Advisor</h3>
+                <p>Dr. Jane Smith</p>
+                <p>Professor, School of Business</p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='coordinator.jpg') }}" alt="Student Coordinators">
+                <h3>Student Coordinators</h3>
+                <p>John Doe - President</p>
+                <p>Sarah Johnson - Vice President</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scroll to top button -->
+<div class="scroll-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+
+{% include 'footer.html' %}
+
+<script>
+// Intersection Observer for fade-in animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+// Observe all containers, features, event cards and team members
+document.querySelectorAll('.container, .feature, .event-card, .team-member').forEach((el) => {
+    observer.observe(el);
+});
+
+// Scroll to top functionality
+const scrollTopBtn = document.querySelector('.scroll-top');
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        scrollTopBtn.classList.add('visible');
+    } else {
+        scrollTopBtn.classList.remove('visible');
+    }
+});
+
+scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Scroll trigger functionality
+document.querySelector('.scroll-trigger').addEventListener('click', () => {
+    document.querySelector('#about').scrollIntoView({ 
+        behavior: 'smooth'
+    });
+});
+</script>
+
+</body>
+</html>

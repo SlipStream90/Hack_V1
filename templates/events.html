@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - MarkFin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: url("{{ url_for('static', filename='5192479.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        .event-section {
+            padding: 100px 0;
+            background: rgba(26, 43, 76, 0.9);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .event-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .event-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .event-header h1 {
+            font-size: 2.5rem;
+            color: #ffdd57;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .event-header h1:hover {
+            color: #ffd000;
+        }
+
+        .event-details {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-details:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .event-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateX(10px);
+        }
+
+        .info-item i {
+            color: #ffdd57;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .info-item:hover i {
+            transform: rotate(360deg);
+        }
+
+        .event-description {
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .gallery-section {
+            margin-top: 40px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 1;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .event-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 43, 76, 0.9);
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover .event-caption {
+            transform: translateY(0);
+        }
+
+        .event-caption h3 {
+            color: #ffdd57;
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .event-caption h3:hover {
+            color: #ffd000;
+        }
+
+        .event-caption p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease 0.1s;
+        }
+
+        .gallery-item:hover .event-caption p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .additional-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            margin-top: 60px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .additional-info h2 {
+            color: #ffdd57;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .event-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main class="event-section">
+        <div class="event-container">
+            <div class="event-header">
+                <h1>Our Events</h1>
+                <p>Explore our upcoming and ongoing events designed to enhance your financial knowledge</p>
+            </div>
+
+            <div class="event-details">
+                <p>Join us for a series of transformative financial events that will help you build a stronger financial future. Our expert-led sessions combine theoretical knowledge with practical applications, ensuring you leave with actionable insights.</p>
+            </div>
+            <div class="gallery-grid">
+                <a href="{{ url_for('event_details', event_id='storage-wars') }}" class="gallery-item">
+                    <img src="/static/gallary21.jpg" alt="Storage Wars Workshop 2024" style="width: 100%; height: 100%; object-fit: contain;">
+                    <div class="event-caption">
+                        <h3>Storage Wars Workshop 2024</h3>
+                        <p>Master the art of storage unit auctions and valuations. Learn bidding strategies, item appraisal techniques, and resale market analysis from experienced buyers. Date: March 15, 2024</p>
+                    </div>
+                </a>
+                
+                <a href="{{ url_for('event_details', event_id='financial-planning') }}" class="gallery-item">
+                    <img src="{{ url_for('static', filename='event2.jpg') }}" alt="Financial Planning Seminar" style="width: 100%; height: 100%; object-fit: contain;">
+                    <div class="event-caption">
+                        <h3>Financial Planning Seminar</h3>
+                        <p>Master your personal finances with comprehensive guidance on budgeting, savings, and retirement planning. Interactive sessions with certified financial planners. Date: April 5, 2024</p>
+                    </div>
+                </a>
+                
+                <a href="{{ url_for('event_details', event_id='luminar') }}" class="gallery-item">
+                    <img src="/static/gallary8.JPG" alt="Market Analysis Conference" style="width: 100%; height: 100%; object-fit: contain;">
+                    <div class="event-caption">
+                        <h3>Luminar 2k24</h3>
+                        <p>Understand market trends with in-depth analysis of current market conditions, economic indicators, and future projections. Featuring keynote speakers from leading financial institutions. Date: May 20, 2024</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="additional-info">
+                <h2>Why Attend Our Events?</h2>
+                <p>At MarkFin, we believe in the power of continuous learning and professional development. Our events are carefully curated to provide maximum value to participants from all backgrounds - whether you're just starting your financial journey or looking to expand your existing knowledge.</p>
+                
+                <h2>What to Expect</h2>
+                <ul>
+                    <li>Expert-led sessions from industry professionals</li>
+                    <li>Interactive workshops and networking opportunities</li>
+                    <li>Practical case studies and real-world applications</li>
+                    <li>Comprehensive study materials and resources</li>
+                    <li>Certificate of participation</li>
+                </ul>
+                
+                <h2>Event Format</h2>
+                <p>Our events combine various learning formats including keynote presentations, panel discussions, hands-on workshops, and Q&A sessions. This multi-format approach ensures that participants can engage with the content in ways that best suit their learning style.</p>
+                
+                <h2>Registration Information</h2>
+                <p>Early bird registrations receive special discounts and exclusive access to pre-event materials. Group bookings are available for corporate teams and educational institutions. For more information about registration and pricing, please contact our events team.</p>
+            </div>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+</body>
+</html>

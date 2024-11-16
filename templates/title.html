@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarkFin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Adding Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add transitions to elements */
+        .banner-content {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .banner-text h1 {
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .banner-text p {
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .banner-btn {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 1s ease-out 0.9s backwards;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background: #ffdd57;
+            color: #1A2B4C;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #1A2B4C;
+            color: #ffdd57;
+            transform: translateY(-3px);
+        }
+
+        .login-btn {
+            padding: 15px 30px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid #444;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .login-btn:hover {
+            background: #444;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #banner {
+            margin-bottom: 0;
+            height: 100vh; /* Full viewport height */
+            position: relative;
+        }
+
+        #banner-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+{% include 'header.html' %}
+
+<section id="banner">
+    <video autoplay muted loop playsinline id="banner-video">
+        <source src="{{ url_for('static', filename='videoplayback.mp4') }}" type="video/mp4">
+    </video>
+    <div class="banner-content">
+        <img src="{{ url_for('static', filename='logo-main.jpg') }}" class="logo">
+        <div class="banner-text">
+            <h1>Aegis</h1>
+            <p>Intelligent Claims, Instant Gratification.</p>
+            <a href="{{url_for('login')}}" class="login-btn">Login <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% include 'footer.html' %}
+</body>
+</html>
