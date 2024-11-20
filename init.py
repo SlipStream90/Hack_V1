@@ -1,13 +1,18 @@
-from flask import Flask,render_template,request,url_for,flash,redirect
+from flask import Flask,render_template,request,url_for,flash,redirect,session,Request
 from email_service import send_mail
 from werkzeug.security import check_password_hash,generate_password_hash
 from weather import get_weather
+import socket
 app=Flask(__name__)
 app.secret_key="hallelujah"
 
 @app.route("/")
 def home():
-    return render_template("title.html")
+    ip=socket.gethostbyname(socket.gethostname())
+    session["ip"]=ip
+    print(session["ip"])
+    return render_template("title.html",ip=ip)
+
 @app.route("/contact",methods=["GET","POST"])
 def login():
     if request.method=="POST":
@@ -33,11 +38,13 @@ def team():
 @app.route("/map",methods=["GET","POST"])
 def map():
     if request.method=="POST":
+        
         latitude=request.form['latitude']
         longitude=request.form['longitude']
         flash(f"Latitude: {latitude}, Longitude: {longitude}","Success")
         global final
         final=get_weather(latitude,longitude)
+        print(session["ip"])
         return render_template("homepage.html",final=final)
 
     return render_template("map.html")

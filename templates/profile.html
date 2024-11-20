@@ -1,0 +1,100 @@
+<!-- Start Generation Here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Insurance Client</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a2b4c 0%, #2c3e50 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #1A2B4C;
+        }
+
+        .profile-header p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .profile-details {
+            margin-top: 20px;
+        }
+
+        .profile-details h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #ffdd57;
+        }
+
+        .profile-details p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .btn-edit {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ffdd57;
+            color: #1A2B4C;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .btn-edit:hover {
+            background: #1A2B4C;
+            color: #ffdd57;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>{{ client.name }}</h1>
+            <p>Insurance Client Profile</p>
+        </div>
+        <div class="profile-details">
+            <h2>Contact Information</h2>
+            <p>Email: {{ client.email }}</p>
+            <p>Phone: {{ client.phone }}</p>
+            <h2>Policy Information</h2>
+            <p>Policy Number: {{ client.policy_number }}</p>
+            <p>Coverage Type: {{ client.coverage_type }}</p>
+            <p>Start Date: {{ client.start_date }}</p>
+            <p>End Date: {{ client.end_date }}</p>
+        </div>
+        <a href="{{ url_for('edit_profile', client_id=client.id) }}" class="btn-edit">Edit Profile</a>
+    </div>
+</body>
+</html>
+<!-- End Generation Here -->
+
