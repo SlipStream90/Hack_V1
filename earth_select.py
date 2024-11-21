@@ -2,9 +2,9 @@ import pandas as pd
 import numpy as np
 
 def file_data():
-    data_main = pd.read_csv("Indian_earthquake_data.csv")
+    data_main = pd.read_csv("Earthquakes.csv")
     # Check for NaN values and handle them
-    data_main = data_main.dropna(subset=['Latitude', 'Longitude', 'Magnitude'])  # Drop rows with NaN in critical columns
+    data_main = data_main.dropna(subset=['latitude', 'longitude', 'mag'])  # Drop rows with NaN in critical columns
     return data_main
 
 def haversine(lat1, lon1, lat2, lon2):
@@ -22,7 +22,7 @@ def haversine(lat1, lon1, lat2, lon2):
 
 def QuerySelector(lat, long):
     data_store = file_data()
-    data_store['distance_km'] = data_store.apply(lambda row: haversine(lat, long, row['Latitude'], row['Longitude']), axis=1)
+    data_store['distance_km'] = data_store.apply(lambda row: haversine(lat, long, row['latitude'], row['longitude']), axis=1)
     print(data_store['distance_km'])
     within_5km = data_store[data_store['distance_km'] <= 100]
     print(within_5km)
@@ -30,7 +30,7 @@ def QuerySelector(lat, long):
 
 def avg_mag(query):
     if not query.empty:  # Check if the query DataFrame is not empty
-        return float(query['Magnitude'].mean())  # Use column name for clarity
+        return float(query['mag'].mean())  # Use column name for clarity
     return float('nan')  # Return NaN if the query is empty
 
 def main(lat,long):
@@ -39,4 +39,4 @@ def main(lat,long):
     return average_magnitude
 
 
-main()
+main(lat=30,long=70)

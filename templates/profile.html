@@ -10,91 +10,95 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a2b4c 0%, #2c3e50 100%);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
         }
-
         .profile-container {
             max-width: 800px;
-            margin: 40px auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
         .profile-header {
-            text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Added margin to separate from header */
         }
-
         .profile-header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #1A2B4C;
+            font-size: 24px;
+            margin: 0; /* Removed margin to prevent overlap */
         }
-
         .profile-header p {
-            font-size: 1.2em;
+            font-size: 16px;
             color: #666;
         }
-
-        .profile-details {
-            margin-top: 20px;
-        }
-
         .profile-details h2 {
-            font-size: 1.8em;
+            font-size: 20px;
+            margin-top: 20px;
             margin-bottom: 10px;
-            color: #ffdd57;
+            color: #333;
         }
-
         .profile-details p {
-            font-size: 1.1em;
-            line-height: 1.6;
+            margin: 10px 0;
+            font-size: 16px;
         }
-
-        .btn-edit {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #ffdd57;
-            color: #1A2B4C;
-            text-decoration: none;
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"] {
+            width: calc(100% - 40px); /* Reduced width for smaller input fields */
+            padding: 8px; /* Reduced padding for smaller input fields */
+            border: 2px solid #ffdd57;
             border-radius: 5px;
-            transition: background 0.3s;
+            font-size: 16px;
+            margin-top: 5px;
+            transition: border-color 0.3s;
         }
-
-        .btn-edit:hover {
-            background: #1A2B4C;
-            color: #ffdd57;
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus {
+            border-color: #1A2B4C;
+            outline: none;
+        }
+        button {
+            background-color: #ffdd57;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ffe584;
         }
     </style>
 </head>
 <body>
+{% include 'header.html' %}
     <div class="profile-container">
         <div class="profile-header">
-            <h1>{{ client.name }}</h1>
+            <h1><input type="text" value="Client Name" /></h1>
             <p>Insurance Client Profile</p>
         </div>
         <div class="profile-details">
             <h2>Contact Information</h2>
-            <p>Email: {{ client.email }}</p>
-            <p>Phone: {{ client.phone }}</p>
+            <p>Email: <input type="email"  readonly placeholder="value@client.com" /></p>
+            <p>Phone: <input type="tel" readonly placeholder="1234567890" /></p>
             <h2>Policy Information</h2>
-            <p>Policy Number: {{ client.policy_number }}</p>
-            <p>Coverage Type: {{ client.coverage_type }}</p>
-            <p>Start Date: {{ client.start_date }}</p>
-            <p>End Date: {{ client.end_date }}</p>
+            <p>Policy Number: <input type="text" readonly placeholder="12345-ABP-001" /></p>
+            <p>Coverage Type: <input type="text" readonly placeholder="12345-ABP-001" /></p>
+            <p>Start Date: <input type="date" readonly placeholder="1234567890" /></p>
+            <p>End Date: <input type="date" readonly placeholder="1234567890" /></p>
         </div>
-        <a href="{{ url_for('edit_profile', client_id=client.id) }}" class="btn-edit">Edit Profile</a>
+        <button type="submit">Submit</button>
     </div>
+{% include 'footer.html' %}
 </body>
 </html>
 <!-- End Generation Here -->
-
